@@ -4,43 +4,43 @@
             <div class="card main-div w-100">
                 <div class="p-3">
                     <h2 class="mb-1 day">Tuesday</h2>
-                    <p class="text-light date mb-0">Date</p>
-                    <small>Time</small>
-                    <h2 class="place"><i class="fa-fa-location">Rio <small>Country</small></i></h2>
+                    <p class="text-light date mb-0">{{ date }}</p>
+                    <small>{{ time }}</small>
+                    <h2 class="place"><i class="fa fa-location">{{ name }} <small>{{ country }}</small></i></h2>
                     <div class="temp">
-                        <h1 class="weather-temp">19&deg;</h1>
-                        <h2 class="text-light">Description</h2>
+                        <h1 class="weather-temp">{{ temperature }}º</h1>
+                        <h2 class="text-light">{{ description }} <img :src="iconUrl"></h2>
                     </div>
                 </div>
             </div>
             <div class="card card-2 w-100">
-            <table class="m-4">
-                <tbody>
-                    <tr>
-                        <th>Sea Level</th>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <th>Sea Level</th>
-                        <td>100</td>
-                    </tr>
-                    <tr>
-                        <th>Sea Level</th>
-                        <td>100</td>
-                    </tr>
-                </tbody>
-            </table>
+                <table class="m-4">
+                    <tbody>
+                        <tr>
+                            <th>Sea Level</th>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <th>Sea Level</th>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <th>Sea Level</th>
+                            <td>100</td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <DaysWeather />
-            
-            <div id="div_form" class="d-flex m-3 justify-content-center">
-                <form action="">
-                    <input type="button" value='Change Location' class="btn change-btn btn-primary">
-                </form>
+                <DaysWeather />
+
+                <div id="div_form" class="d-flex m-3 justify-content-center">
+                    <form action="">
+                        <input type="button" value='Change Location' class="btn change-btn btn-primary">
+                    </form>
+                </div>
             </div>
         </div>
-        </div>
-        
+
     </div>
 </template>
 
@@ -52,7 +52,43 @@ export default {
     name: 'MyWeather',
     components: {
         DaysWeather
-    }
+    },
+    props: {
+        city: String
+    },
+    data() {
+        return {
+            temperature: null,
+            description: null,
+            iconUrl: null,
+            date: null,
+            time: null,
+            name: null,
+            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            country: null,
+            sea_level: null,
+            wind: null
+
+        }
+    },
+
+    async created() {
+        const req = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=804510e0033e4d65eefbf1ff697d676c`
+        );
+        const res = await req.json();
+        console.log(res);
+        this.temperature = Math.round(res.main.temp);
+        this.description = res.weather[0].description;
+        this.name = res.name;
+        this.country = res.sys.country;
+        this.iconUrl = `https://api.openweathermap.org/img/w/${res.weather[0].icon}`;
+        const d = new Date();
+        this.date = d.getDate() + '-' + this.monthNames[d.getMonth()] + '-' + d.getFullYear();
+        this.time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+    },
+
+
 
 }
 </script>
