@@ -51,7 +51,7 @@ export default {
                     console.error('Erro na resposta da API:', res.status, res.statusText);
                 }
             } catch (error) {
-                console.error('Erro na requisição:', error);
+                console.error('Erro na requisição:', error); 
             }
         }
     }
