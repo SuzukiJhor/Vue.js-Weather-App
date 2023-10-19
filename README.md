@@ -1,5 +1,7 @@
 # weather-app
 
+🛠️ Application developed in Vue.js that seamlessly retrieves real-time data and provides accurate predictions
+
 ## Project setup
 ```
 npm install
