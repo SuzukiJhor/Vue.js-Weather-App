@@ -3,7 +3,7 @@
         <div class="d-flex">
             <div class="card main-div w-100">
                 <div class="p-3">
-                    <h2 class="mb-1 day">Tuesday</h2>
+                    <h2 class="mb-1 day">Today</h2>
                     <p class="text-light date mb-0">{{ date }}</p>
                     <small>{{ time }}</small>
                     <h2 class="place"><i class="fa fa-location">{{ name }} <small>{{ country }}</small></i></h2>
@@ -18,20 +18,20 @@
                     <tbody>
                         <tr>
                             <th>Sea Level</th>
-                            <td>100</td>
+                            <td>{{ sea_level }}</td>
                         </tr>
                         <tr>
-                            <th>Sea Level</th>
-                            <td>100</td>
+                            <th>Humidity</th>
+                            <td>{{ humidity }}</td>
                         </tr>
                         <tr>
-                            <th>Sea Level</th>
-                            <td>100</td>
+                            <th>Wind</th>
+                            <td>{{ wind }}</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <DaysWeather />
+                <DaysWeather :cityname="cityname"/>
 
                 <div id="div_form" class="d-flex m-3 justify-content-center">
                     <form action="">
@@ -58,6 +58,7 @@ export default {
     },
     data() {
         return {
+            cityname: this.city,
             temperature: null,
             description: null,
             iconUrl: null,
@@ -67,7 +68,8 @@ export default {
             monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             country: null,
             sea_level: null,
-            wind: null
+            wind: null,
+            humidity: null
 
         }
     },
@@ -77,18 +79,19 @@ export default {
             `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=804510e0033e4d65eefbf1ff697d676c`
         );
         const res = await req.json();
-        console.log(res);
+       
         this.temperature = Math.round(res.main.temp);
         this.description = res.weather[0].description;
         this.name = res.name;
+        this.wind = res.wind.speed;
+        this.sea_level = res.main.sea_level;
         this.country = res.sys.country;
+        this.humidity = res.main.humidity;
         this.iconUrl = `https://api.openweathermap.org/img/w/${res.weather[0].icon}`;
         const d = new Date();
         this.date = d.getDate() + '-' + this.monthNames[d.getMonth()] + '-' + d.getFullYear();
         this.time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
     },
-
-
 
 }
 </script>

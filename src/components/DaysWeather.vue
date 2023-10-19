@@ -24,8 +24,40 @@
 <script>
 export default {
     name: 'DaysWeather',
+    props: {
+        cityname: String
+    },
+    data() {
+        return {
 
+        }
+    },
+    mounted() {
+        this.fetchWeatherData();
+    },
+    methods: {
+        async fetchWeatherData() {
+            const apiKey = '804510e0033e4d65eefbf1ff697d676c';
+            const city = this.cityname;
+            const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
+
+            try {
+                const res = await fetch(apiUrl);
+                if (res.ok) {
+                    const resJson = await res.json();
+                    const forecastData = resJson.list;
+                    console.log(forecastData)
+                } else {
+                    console.error('Erro na resposta da API:', res.status, res.statusText);
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+            }
+        }
+    }
 }
+
+
 </script>
 
 <style scoped>
