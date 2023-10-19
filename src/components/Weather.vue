@@ -13,8 +13,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card card-2 w-100">
+            <div class="card card-2 w-100">
             <table class="m-4">
                 <tbody>
                     <tr>
@@ -31,18 +30,29 @@
                     </tr>
                 </tbody>
             </table>
+
+            <DaysWeather />
+            
             <div id="div_form" class="d-flex m-3 justify-content-center">
                 <form action="">
                     <input type="button" value='Change Location' class="btn change-btn btn-primary">
                 </form>
             </div>
         </div>
+        </div>
+        
     </div>
 </template>
 
 <script>
+
+import DaysWeather from './DaysWeather.vue';
+
 export default {
     name: 'MyWeather',
+    components: {
+        DaysWeather
+    }
 
 }
 </script>

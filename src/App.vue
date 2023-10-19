@@ -9,7 +9,7 @@
         <button class="btn-serch btn btn-primary">Search <i class="fas fa-search"></i></button>
       </div>
     </div>
-    <MyWeather />
+    <MyWeather :city="city" v-if="showWeather" />
   </div>
 </template>
 
@@ -53,6 +53,4 @@ body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin: 5rem;
 }
-
-
 </style>
