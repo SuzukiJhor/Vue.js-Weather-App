@@ -15,10 +15,3 @@ npm run serve
 <img width="675" alt="image" src="https://github.com/SuzukiJhor/Vue.js-Weather-App/assets/95131108/9346ed2c-2577-4a1f-a7ba-c2e16792ad02">
 
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
