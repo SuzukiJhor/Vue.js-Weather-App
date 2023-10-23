@@ -1,22 +1,13 @@
 <template>
     <div class="days-tab text-center">
-        <div class="loading">Loading...</div>
+        <div class="loading" v-if="loading">Loading...</div>
         <ul class="p-0">
-            <li class="li_active">
-                <div class="py-3">icon</div>
-                <div class="py-3">day</div>
-                <div class="py-3">12oc</div>
+            <li class="li_active" v-for="day in forecast" :key="day.date">
+                <div class="py-3"><img :src="day.iconUrl"></div>
+                <div class="py-3">{{ day.date }}</div>
+                <div class="py-3">{{ day.temperature }}&deg;C</div>
             </li>
-            <li class="li_active">
-                <div class="py-3">icon</div>
-                <div class="py-3">day</div>
-                <div class="py-3">12oc</div>
-            </li>
-            <li class="li_active">
-                <div class="py-3">icon</div>
-                <div class="py-3">day</div>
-                <div class="py-3">12oc</div>
-            </li>
+
         </ul>
     </div>
 </template>
@@ -29,7 +20,9 @@ export default {
     },
     data() {
         return {
-
+            forecast: [],
+            loading: true,
+            iconUrl: null,
         }
     },
     mounted() {
@@ -48,16 +41,16 @@ export default {
                     const resJson = await res.json();
                     const forecastData = resJson.list;
 
-                  filteredData = forecastData.map(item => {
+                    console.log(forecastData);
+
+                    filteredData = forecastData.map(item => {
                         return {
-                            date: new Date().toLocaleDateString('PT-BR').split('/').reverse().join('-').slice(0, 10),
+                            date: item.dt_txt.split(" ")[0],
                             temperature: Math.round(item.main.temp),
                             description: item.weather[0].description,
                             iconUrl: `https://api.openweathermap.org/img/w/${item.weather[0].icon}.png`
                         }
-                    }).reduce((acc, item)=>{
-                        console.log(acc, item);
-                    })
+                    }).slice(1, 4);
 
 
                 } else {
@@ -69,7 +62,9 @@ export default {
                 console.error('Erro na requisição:', error);
             }
 
-            console.log(filteredData, 'filtro');
+            this.forecast = filteredData;
+            this.loading = false;
+
         }
     }
 }

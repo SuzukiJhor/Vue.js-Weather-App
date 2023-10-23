@@ -18,15 +18,18 @@
                     <tbody>
                         <tr>
                             <th>Sea Level</th>
-                            <td>{{ sea_level }}</td>
+                            <td v-if="sea_level > 0">{{ sea_level }}</td>
+                            <td v-else>Null</td>
                         </tr>
                         <tr>
                             <th>Humidity</th>
-                            <td>{{ humidity }}</td>
+                            <td v-if="humidity > 0">{{ humidity }}</td>
+                            <td v-else>Null</td>
                         </tr>
                         <tr>
                             <th>Wind</th>
-                            <td>{{ wind }}</td>
+                            <td v-if="wind > 0">{{ wind }}</td>
+                            <td v-else>Null</td>
                         </tr>
                     </tbody>
                 </table>
@@ -71,6 +74,11 @@ export default {
             wind: null,
             humidity: null
 
+        }
+    },
+    methods: {
+        changeLocation() {
+            window.location.reload()
         }
     },
 
