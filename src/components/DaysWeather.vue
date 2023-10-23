@@ -40,19 +40,36 @@ export default {
             const apiKey = '804510e0033e4d65eefbf1ff697d676c';
             const city = this.cityname;
             const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`;
+            let filteredData = ''
 
             try {
                 const res = await fetch(apiUrl);
                 if (res.ok) {
                     const resJson = await res.json();
                     const forecastData = resJson.list;
-                    console.log(forecastData)
+
+                  filteredData = forecastData.map(item => {
+                        return {
+                            date: new Date().toLocaleDateString('PT-BR').split('/').reverse().join('-').slice(0, 10),
+                            temperature: Math.round(item.main.temp),
+                            description: item.weather[0].description,
+                            iconUrl: `https://api.openweathermap.org/img/w/${item.weather[0].icon}.png`
+                        }
+                    }).reduce((acc, item)=>{
+                        console.log(acc, item);
+                    })
+
+
                 } else {
                     console.error('Erro na resposta da API:', res.status, res.statusText);
                 }
+
+
             } catch (error) {
-                console.error('Erro na requisição:', error); 
+                console.error('Erro na requisição:', error);
             }
+
+            console.log(filteredData, 'filtro');
         }
     }
 }
