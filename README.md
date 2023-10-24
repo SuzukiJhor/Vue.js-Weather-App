@@ -11,7 +11,7 @@ npm install
 ```
 npm run serve
 ```
+<img width="724" alt="image" src="https://github.com/SuzukiJhor/Vue.js-Weather-App/assets/95131108/31c7699b-65a7-4071-80aa-58fc88053fce">
 
-<img width="744" alt="image" src="https://github.com/SuzukiJhor/Vue.js-Weather-App/assets/95131108/963f1a18-cce4-423e-b05b-42a6fe6e27da">
 
 
