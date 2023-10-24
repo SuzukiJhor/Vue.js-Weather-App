@@ -34,11 +34,12 @@
                     </tbody>
                 </table>
 
-                <DaysWeather :cityname="cityname"/>
+                <DaysWeather :cityname="cityname" />
 
                 <div id="div_form" class="d-flex m-3 justify-content-center">
                     <form action="">
-                        <input @click="changeLocation" type="button" value='Change Location' class="btn change-btn btn-primary">
+                        <input @click="changeLocation" type="button" value='Change Location'
+                            class="btn change-btn btn-primary">
                     </form>
                 </div>
             </div>
@@ -77,8 +78,38 @@ export default {
         }
     },
     methods: {
+
         changeLocation() {
             window.location.reload()
+        },
+
+        async getImageByCity(city) {
+           
+            const accessKey = 'rXgmo3usqDvKkCu4-Ksnhs_00zQssA-SF8ORkzm0vDg';
+            const apiUrl = `https://api.unsplash.com/search/photos?page=1&query=${city}&client_id=${accessKey}`;
+            let imgUrl;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': `Client-ID ${accessKey}`,
+                    },
+                });
+
+                if (response.ok) {
+                  const  data = await response.json();
+
+                  imgUrl = data.results[0].urls.regular
+
+                } else {
+                    console.error('Erro na resposta da API');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+            }
+
+           const elementImg = document.querySelector('.main-div');
+           elementImg.style.backgroundImage = `url(${imgUrl})`;
         }
     },
 
@@ -87,7 +118,7 @@ export default {
             `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&appid=804510e0033e4d65eefbf1ff697d676c`
         );
         const res = await req.json();
-       
+
         this.temperature = Math.round(res.main.temp);
         this.description = res.weather[0].description;
         this.name = res.name;
@@ -99,7 +130,8 @@ export default {
         const d = new Date();
         this.date = d.getDate() + '-' + this.monthNames[d.getMonth()] + '-' + d.getFullYear();
         this.time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-    },
+        this.getImageByCity(this.cityname);
+    }
 
 }
 </script>
