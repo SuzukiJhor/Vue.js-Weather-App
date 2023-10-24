@@ -33,6 +33,25 @@ export default {
       this.showWeather = false;
       await this.$nextTick();
       this.showWeather = true;
+      this.getImageByCity();
+
+    },
+
+    async getImageByCity() {
+      const city = 'Rio de Janeiro';
+      const accessKey = 'rXgmo3usqDvKkCu4-Ksnhs_00zQssA-SF8ORkzm0vDg';
+      const ApiUrl = `https://api.unsplash.com/search/photos?page=1&query=${city}`;
+
+      fetch(ApiUrl, {
+        'Authorization': `Client-ID ${accessKey}`,
+      }).then(response => response.json())
+        .then(data => {
+          // Processar os dados da imagem aqui
+          console.log(data);
+        })
+        .catch(error => { 
+          console.error('Erro:', error);
+        });
 
     }
   }

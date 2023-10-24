@@ -38,7 +38,7 @@
 
                 <div id="div_form" class="d-flex m-3 justify-content-center">
                     <form action="">
-                        <input type="button" value='Change Location' class="btn change-btn btn-primary">
+                        <input @click="changeLocation" type="button" value='Change Location' class="btn change-btn btn-primary">
                     </form>
                 </div>
             </div>
