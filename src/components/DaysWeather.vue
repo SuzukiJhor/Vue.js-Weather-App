@@ -41,8 +41,6 @@ export default {
                     const resJson = await res.json();
                     const forecastData = resJson.list;
 
-                    console.log(forecastData);
-
                     filteredData = forecastData.map(item => {
                         return {
                             date: item.dt_txt.split(" ")[0],
@@ -51,24 +49,18 @@ export default {
                             iconUrl: `https://api.openweathermap.org/img/w/${item.weather[0].icon}.png`
                         }
                     }).slice(1, 4);
-
-
                 } else {
                     console.error('Erro na resposta da API:', res.status, res.statusText);
                 }
-
-
             } catch (error) {
                 console.error('Erro na requisição:', error);
             }
 
             this.forecast = filteredData;
             this.loading = false;
-
         }
     }
 }
-
 
 </script>
 
